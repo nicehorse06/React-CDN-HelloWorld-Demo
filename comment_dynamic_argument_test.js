@@ -22,7 +22,9 @@ class CommentBox extends React.Component {
     return(
       <div className="comment-box">
         <h3>Comments</h3>
-        <h4 className="comment-count">{comments.length} comments</h4>
+        <h4 className="comment-count">
+          {this._getCommentsTitle(comments.length)}
+        </h4>
         <div className="comment-list">
           {comments}
         </div>
@@ -41,6 +43,16 @@ class CommentBox extends React.Component {
         <Comment author={comment.author} body={comment.body} key={comment.id} />
       );
     });
+  }
+
+  _getCommentsTitle(commentCount) {
+    if (commentCount === 0) {
+      return 'No comment yet';
+    } else if (commentCount === 1) {
+      return '1 comment';
+    } else {
+      return `${commentCount} comments`;
+    }
   }
 }
 
