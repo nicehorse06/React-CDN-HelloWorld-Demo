@@ -2,9 +2,9 @@ class Comment extends React.Component {
   render() {
     return(
       <div className="comment">
-        <p className="comment-header">Horse Horse</p>
+        <p className="comment-header">{this.props.author}</p>
         <p className="comment-body">
-          I wanna know what love is...
+          {this.props.body}
         </p>
         <p className="comment-footer">
           <a href="#" className="comment-footer-delete">
@@ -23,8 +23,8 @@ class CommentBox extends React.Component {
         <h3>Comments</h3>
         <h4 className="comment-count">2 comments</h4>
         <div className="comment-list">
-          <Comment />
-          <Comment />
+          <Comment author="Morgan McCircuit" body="Great picture!"/>
+          <Comment author="Bending Bender" body="Excellent stuff"/>
         </div>
       </div>
     );
