@@ -33,12 +33,19 @@ class Comment extends React.Component {
           {this.props.body}
         </p>
         <p className="comment-footer">
-          <a href="#" className="comment-footer-delete">
+          <a href="#" className="comment-footer-delete" onClick={this._handleDelete.bind(this)}>
             Delete comment
           </a>
         </p>
       </div>
     );
+  }
+
+  _handleDelete(event) {
+    evnet.preventDefault();
+    if (confirm('Are you sure?')) {
+      this.props.onDelete(this.props.comment);
+    }
   }
 }
 
@@ -90,13 +97,26 @@ class CommentBox extends React.Component {
     });
   }
 
+  _deleteComment(comment) {
+    jQuery.ajax({
+      method: 'DELETE',
+      url: `/api/comments/${comment.id}`
+    })
+
+    const comments = [...this.state.comments];
+    const commentIndex = comments.indexOf(comment);
+    comments.splice(commentIndex, 1);
+
+    this.setState({ comments });
+  }
+
   _addComment(author, body) {
-    const comment = {
-      id: this.state.comments.length + 1,
-      author,
-      body,
-    };
-    this.setState({ comments: this.state.comments.concat([comment])});
+    const comment = { author, body, };
+
+    jQuery.post('/api/comments', { comment })
+      .success(newComment => {
+        this.setState({ comments: this.state.comments.concat([comment])});
+      });
   }
 
 
@@ -110,9 +130,10 @@ class CommentBox extends React.Component {
     return this.state.comments.map((comment) => {
       return (
         <Comment
-          author={comment.author}
-          body={comment.body}
-          key={comment.id} />
+          key={comment.id}
+          comment={comment}
+          onDelete={this._deleteComment.bind(this)}
+        />
       );
     });
   }
