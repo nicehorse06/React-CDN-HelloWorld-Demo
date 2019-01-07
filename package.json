@@ -18,7 +18,7 @@
     "http-server": "~0.9.0",
     "live-server": "^1.1.0",
     "webpack": "~1.13.1",
-    "webpack-dev-server": "~1.14.1"
+    "webpack-dev-server": "~3.1.11"
   },
   "dependencies": {
     "react": "~15.2.0",
